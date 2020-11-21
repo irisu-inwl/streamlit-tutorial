@@ -7,8 +7,7 @@ import pandas as pd
 import numpy as np
 
 from keras.preprocessing import image
-from tensorflow.keras.applications.xception import Xception, preprocess_input, decode_predictions
-
+from keras.applications.xception import Xception, preprocess_input, decode_predictions
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 

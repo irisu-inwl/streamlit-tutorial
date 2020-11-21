@@ -7,4 +7,6 @@ seaborn
 plotly
 tensorflow
 Keras
+pystan
+fbprophet
 streamlit

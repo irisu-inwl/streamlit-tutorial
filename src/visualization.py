@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.figure_factory as ff
 
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_time_series_data():
     """
     ランダムに時系列データを生成する。
@@ -19,7 +19,7 @@ def load_time_series_data():
     return chart_data
 
 
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_iris_data():
     """
     データ読み込み, cacheにして最適化を行う
@@ -30,7 +30,7 @@ def load_iris_data():
     return df, labels
 
 
-def show_heatmap(df):
+def show_heatmap(df: 'pd.DataFrame'):
     """
     各特徴の相関ヒートマップをみる
     """
@@ -39,7 +39,7 @@ def show_heatmap(df):
     st.pyplot(fig)
 
 
-def show_distplot(df, labels):
+def show_distplot(df: 'pd.DataFrame', labels: 'np.ndarray'):
     """
     それぞれの特徴について、各ラベルごとの分布を見る
     """
@@ -54,7 +54,7 @@ def show_distplot(df, labels):
 
 
 @st.cache(allow_output_mutation=True)
-def fit_transform_pca(df):
+def fit_transform_pca(df: 'pd.DataFrame'):
     """
     主成分分析した結果の第二主成分ベクトルを可視化した結果を得る
     """
@@ -62,7 +62,7 @@ def fit_transform_pca(df):
     X = pca.fit_transform(df)
     return X
 
-def show_scatter2d(X, labels):
+def show_scatter2d(X: 'np.ndarray', labels: 'np.ndarray'):
     fig, ax = plt.subplots(figsize=(10,10))
     target_names = list(set(labels))
     for i, target in enumerate(target_names):
