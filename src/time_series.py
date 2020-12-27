@@ -40,36 +40,41 @@ def fit_and_forecast(df: 'pd.DataFrame', periods:int = 14):
     return model, forecast
 
 
-st.title('東京都COVID-19感染者数をprophetする')
+def main():
+    st.title('東京都COVID-19感染者数をprophetする')
 
-df = load_data('data/data.json')
+    df = load_data('data/data.json')
 
-st.write('### 直近の感染者数')
-st.write(df.tail())
+    st.write('### 直近の感染者数')
+    st.write(df.tail())
 
-prophet_df = df[['日付', '感染者総数']].rename(columns={'日付':'ds', '感染者総数':'y'})
-prophet_df['cap'] = prophet_df.iloc[-1].y*1.5
+    prophet_df = df[['日付', '感染者総数']].rename(columns={'日付':'ds', '感染者総数':'y'})
+    prophet_df['cap'] = prophet_df.iloc[-1].y*1.5
 
-model, forecast = fit_and_forecast(prophet_df)
+    model, forecast = fit_and_forecast(prophet_df)
 
-st.write('### モデルの予測結果と実測値')
+    st.write('### モデルの予測結果と実測値')
 
-fig = plot_plotly(model, forecast)
-st.plotly_chart(fig, use_container_width=True)
+    fig = plot_plotly(model, forecast)
+    st.plotly_chart(fig, use_container_width=True)
 
-st.write('予測値テーブル')
-forecast['diff_yhat'] = forecast['yhat'].diff()
-prophet_df['diff_y'] = prophet_df.y.diff()
-df_view = pd.concat((forecast, prophet_df[['y', 'diff_y']]), axis=1)[['ds','y','diff_y','yhat','diff_yhat']]
-st.write(
-    df_view.rename(columns={'ds':'日付', 'y': '感染者総数', 'diff_y': '小計', 'yhat': '感染者総数予測値', 'diff_yhat': '小計予測値'}).tail(17)
-)
+    st.write('予測値テーブル')
+    forecast['diff_yhat'] = forecast['yhat'].diff()
+    prophet_df['diff_y'] = prophet_df.y.diff()
+    df_view = pd.concat((forecast, prophet_df[['y', 'diff_y']]), axis=1)[['ds','y','diff_y','yhat','diff_yhat']]
+    st.write(
+        df_view.rename(columns={'ds':'日付', 'y': '感染者総数', 'diff_y': '小計', 'yhat': '感染者総数予測値', 'diff_yhat': '小計予測値'}).tail(17)
+    )
 
-st.write('### トレンドと季節変動')
-fig = plot_components_plotly(model, forecast)
-st.plotly_chart(fig, use_container_width=True)
+    st.write('### トレンドと季節変動')
+    fig = plot_components_plotly(model, forecast)
+    st.plotly_chart(fig, use_container_width=True)
 
-st.write('### 変化点')
-fig = model.plot(forecast)
-add_changepoints_to_plot(fig.gca(), model, forecast)
-st.pyplot(fig)
+    st.write('### 変化点')
+    fig = model.plot(forecast)
+    add_changepoints_to_plot(fig.gca(), model, forecast)
+    st.pyplot(fig)
+
+
+if __name__ == '__main__':
+    main()

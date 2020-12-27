@@ -75,24 +75,29 @@ def show_scatter2d(X: 'np.ndarray', labels: 'np.ndarray'):
     st.pyplot(fig)
 
 
-st.title('Visualization app')
+def main():
+    st.title('Visualization app')
 
-st.write('時系列データをline plot')
-chart_data = load_time_series_data()
-st.line_chart(chart_data)
+    st.write('時系列データをline plot')
+    chart_data = load_time_series_data()
+    st.line_chart(chart_data)
 
-st.write('### アイリスデータを見ていく')
-df, labels = load_iris_data()
+    st.write('### アイリスデータを見ていく')
+    df, labels = load_iris_data()
 
-st.write('DataFrameの表示')
-st.write(df)
+    st.write('DataFrameの表示')
+    st.write(df)
 
-st.write('特徴ごとの相関のHeatMap表示')
-show_heatmap(df)
+    st.write('特徴ごとの相関のHeatMap表示')
+    show_heatmap(df)
 
-st.write('ラベルごとの特徴の分布をみる')
-show_distplot(df, labels)
+    st.write('ラベルごとの特徴の分布をみる')
+    show_distplot(df, labels)
 
-st.write('主成分分析をして、2次元にマッピングする')
-df_pca = fit_transform_pca(df)
-show_scatter2d(df_pca, labels)
+    st.write('主成分分析をして、2次元にマッピングする')
+    df_pca = fit_transform_pca(df)
+    show_scatter2d(df_pca, labels)
+
+
+if __name__ == '__main__':
+    main()
