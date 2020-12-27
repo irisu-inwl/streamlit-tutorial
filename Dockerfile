@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.8
 
 RUN mkdir /opt/streamlit/
 WORKDIR /opt/streamlit/

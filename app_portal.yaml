@@ -1,5 +1,7 @@
 runtime: custom
 env: flex
-network:
-  forwarded_ports:
-    - 8501/tcp
+
+resources:
+  cpu: 1
+  memory_gb: 2
+  disk_size_gb: 20
